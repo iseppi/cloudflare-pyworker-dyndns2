@@ -241,7 +241,15 @@ class Default(WorkerEntrypoint):
     async def _handle_checkip(self, request):
         """Handle /nic/checkip — return the caller's IP address."""
         client_ip = request.headers.get("CF-Connecting-IP", "")
-        return Response(client_ip, headers={"Content-Type": "text/plain"})
+        if not client_ip:
+            return Response("Unable to determine IP address", status=500,
+                            headers={"Content-Type": "text/plain"})
+        try:
+            addr = ipaddress.ip_address(client_ip)
+        except ValueError:
+            return Response("Unable to determine IP address", status=500,
+                            headers={"Content-Type": "text/plain"})
+        return Response(str(addr), headers={"Content-Type": "text/plain"})
 
     async def _handle_update(self, request):
         """Handle /nic/update — the dyndns2 update endpoint."""
