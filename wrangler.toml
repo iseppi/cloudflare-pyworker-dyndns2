@@ -1,0 +1,4 @@
+name = "cloudflare-pyworker-dyndns2"
+main = "src/main.py"
+compatibility_date = "2025-12-01"
+compatibility_flags = ["python_workers"]

@@ -1,0 +1,14 @@
+[project]
+name = "cloudflare-pyworker-dyndns2"
+version = "0.1.0"
+description = "A Cloudflare Worker implementing the dyndns2 protocol to update DNS records in Cloudflare"
+requires-python = ">=3.12"
+dependencies = [
+    "cloudflare",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk",
+]
