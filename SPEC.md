@@ -231,11 +231,11 @@ ph = PasswordHasher()
 ph.verify(stored_hash, password)
 ```
 
-A standalone utility script (`tools/hash_password.py`) is provided to generate password hashes for pasting into the `AUTH_JSON` configuration. It requires `argon2-cffi` to be installed locally:
+A standalone utility script (`tools/generate_auth_json.py`) is provided to interactively generate a complete `AUTH_JSON` configuration. It prompts for one or more users, including username, password (with confirmation), and hostnames, then outputs the full JSON structure with Argon2id hashes ready to paste as a Worker secret. It requires `argon2-cffi` to be installed locally:
 
 ```bash
 pip install argon2-cffi
-python tools/hash_password.py
+python tools/generate_auth_json.py
 ```
 
 ## 10. Error Handling
@@ -284,7 +284,7 @@ cloudflare-pyworker-dyndns2/
 ├── src/
 │   └── main.py              # Worker entry point
 ├── tools/
-│   └── hash_password.py     # Password hashing utility
+│   └── generate_auth_json.py  # AUTH_JSON configuration generator
 ├── pyproject.toml            # Python dependencies & project metadata
 ├── wrangler.toml             # Cloudflare Worker configuration
 ├── SPEC.md                   # Project specification

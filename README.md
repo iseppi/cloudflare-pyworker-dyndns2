@@ -36,11 +36,14 @@ See [SPEC.md](SPEC.md) for the full project specification.
 
 3. Create a Cloudflare API token with **DNS Edit** permissions for your zones.
 
-4. Generate password hashes for your users:
+4. Generate your AUTH_JSON configuration:
 
    ```bash
-   python tools/hash_password.py
+   pip install argon2-cffi
+   python tools/generate_auth_json.py
    ```
+
+   The script will interactively prompt for usernames, passwords, and hostnames, then output the complete JSON structure.
 
 5. Set the Worker secrets:
 
