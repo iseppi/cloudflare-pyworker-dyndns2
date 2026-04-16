@@ -29,7 +29,6 @@ The following Python standard library modules are used:
 - `ipaddress` — for detecting whether an address is IPv4 or IPv6
 - `json` — for parsing the `AUTH_JSON` secret
 - `base64` — for decoding HTTP Basic Auth credentials
-- `hashlib` / `hmac` — for password hash verification (algorithm dependent, see Section 9)
 
 ## 3. Endpoints
 
@@ -222,14 +221,22 @@ When both an A and AAAA record are updated for a single hostname (via comma-sepa
 
 ## 9. Password Hashing
 
-Passwords in `AUTH_JSON` are stored as salted hashes. The hashing algorithm will be determined by what is available in the Cloudflare Workers Python runtime. Preference order:
+Passwords in `AUTH_JSON` are stored as Argon2id hashes, using the `argon2-cffi` library. This library is supported in the Cloudflare Workers Python runtime (Pyodide includes `argon2-cffi-bindings`).
 
-1. Argon2id
-2. bcrypt
-3. scrypt
-4. PBKDF2-SHA256 (fallback)
+The Worker uses `argon2.PasswordHasher` for verification:
 
-A standalone Python utility script will be provided to generate password hashes for pasting into the `AUTH_JSON` configuration.
+```python
+from argon2 import PasswordHasher
+ph = PasswordHasher()
+ph.verify(stored_hash, password)
+```
+
+A standalone utility script (`tools/hash_password.py`) is provided to generate password hashes for pasting into the `AUTH_JSON` configuration. It requires `argon2-cffi` to be installed locally:
+
+```bash
+pip install argon2-cffi
+python tools/hash_password.py
+```
 
 ## 10. Error Handling
 
