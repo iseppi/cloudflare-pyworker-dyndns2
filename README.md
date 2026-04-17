@@ -73,11 +73,15 @@ uv run pywrangler dev
 
 ## Deployment
 
-Deploy to Cloudflare:
+Install packages, trim unused SDK modules, and deploy:
 
 ```bash
-uv run pywrangler deploy
+uv run pywrangler deploy --dry-run   # let pywrangler install packages
+./scripts/trim_python_modules.sh      # trim unused Cloudflare SDK modules
+npx wrangler deploy                   # deploy with trimmed bundle
 ```
+
+The trim script removes unused Cloudflare SDK modules (we only need DNS and Zones), reducing the bundle from ~3.5 MB to ~2.5 MB gzipped — well under the free plan's 3 MB limit.
 
 ## Usage
 

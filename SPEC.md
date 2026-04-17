@@ -285,6 +285,8 @@ cloudflare-pyworker-dyndns2/
 │   └── main.py              # Worker entry point
 ├── tools/
 │   └── generate_auth_json.py  # AUTH_JSON configuration generator
+├── scripts/
+│   └── trim_python_modules.sh # Trims unused SDK modules before deploy
 ├── pyproject.toml            # Python dependencies & project metadata
 ├── wrangler.toml             # Cloudflare Worker configuration
 ├── SPEC.md                   # Project specification
